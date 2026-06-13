@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Annraj Agro Food – Healthy & Best Prices</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --cream:   #FBF7F0;
+      --leaf:    #2D6A4F;
+      --leaflt:  #52B788;
+      --gold:    #D4A017;
+      --charcoal:#1A1A1A;
+      --muted:   #6B7280;
+      --white:   #FFFFFF;
+      --card-bg: #FFFFFF;
+      --radius:  14px;
+      --shadow:  0 4px 24px rgba(0,0,0,0.09);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--charcoal);overflow-x:hidden;}
+
+    /* ── NAV ── */
+    nav{
+      position:fixed;top:0;left:0;right:0;z-index:100;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 6vw;height:64px;
+      background:rgba(251,247,240,0.88);backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(45,106,79,0.12);
+    }
+    .nav-logo{
+      font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:900;
+      color:var(--leaf);letter-spacing:-.5px;
+    }
+    .nav-logo span{color:var(--gold);}
+    .nav-links{display:flex;gap:28px;list-style:none;}
+    .nav-links a{text-decoration:none;font-size:.875rem;font-weight:500;color:var(--charcoal);transition:color .2s;}
+    .nav-links a:hover{color:var(--leaf);}
+    .nav-cta{
+      background:var(--leaf);color:var(--white);border:none;
+      padding:8px 20px;border-radius:50px;font-size:.85rem;font-weight:600;cursor:pointer;
+      transition:background .2s,transform .15s;
+    }
+    .nav-cta:hover{background:#1e4d38;transform:translateY(-1px);}
+
+    /* ── HERO ── */
+    .hero{
+      position:relative;min-height:100svh;display:flex;align-items:center;
+      padding:64px 6vw 0;overflow:hidden;
+    }
+    .hero-bg{
+      position:absolute;inset:0;
+      background:linear-gradient(135deg,#0f2d1e 0%,#1a4a30 55%,#2d6a4f 100%);
+    }
+    .hero-img{
+      position:absolute;right:0;bottom:0;width:55%;max-width:680px;height:100%;
+      object-fit:cover;object-position:center top;
+      mask-image:linear-gradient(to left,rgba(0,0,0,.8) 55%,transparent 100%);
+      -webkit-mask-image:linear-gradient(to left,rgba(0,0,0,.8) 55%,transparent 100%);
+      opacity:.65;
+    }
+    .hero-grain{
+      position:absolute;inset:0;pointer-events:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity:.4;
+    }
+    .hero-content{
+      position:relative;z-index:2;max-width:580px;
+    }
+    .hero-eyebrow{
+      display:inline-block;margin-bottom:18px;
+      font-size:.75rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;
+      color:var(--leaflt);border:1px solid rgba(82,183,136,.35);
+      padding:5px 14px;border-radius:50px;
+    }
+    .hero-title{
+      font-family:'Playfair Display',serif;font-size:clamp(2.6rem,6vw,4.8rem);
+      font-weight:900;line-height:1.05;color:var(--white);
+      text-shadow:0 2px 20px rgba(0,0,0,.35);
+    }
+    .hero-title .gold{color:var(--gold);}
+    .hero-sub{
+      margin-top:18px;font-size:1.05rem;color:rgba(255,255,255,.72);
+      max-width:420px;line-height:1.65;
+    }
+    .hero-actions{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;}
+    .btn-primary{
+      background:var(--gold);color:var(--charcoal);border:none;
+      padding:14px 34px;border-radius:50px;font-size:1rem;font-weight:700;
+      cursor:pointer;transition:transform .2s,box-shadow .2s;
+      box-shadow:0 4px 20px rgba(212,160,23,.4);
+    }
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(212,160,23,.5);}
+    .btn-outline{
+      background:transparent;color:var(--white);
+      border:2px solid rgba(255,255,255,.4);
+      padding:14px 28px;border-radius:50px;font-size:1rem;font-weight:600;
+      cursor:pointer;transition:border-color .2s,background .2s;
+    }
+    .btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,.08);}
+    .hero-badge{
+      margin-top:48px;display:flex;gap:32px;flex-wrap:wrap;
+    }
+    .badge-item{color:rgba(255,255,255,.7);font-size:.8rem;}
+    .badge-item strong{display:block;color:var(--white);font-size:1.15rem;font-family:'Playfair Display',serif;}
+
+    /* ── SECTION WRAPPER ── */
+    .section{padding:80px 6vw;}
+    .section-label{
+      font-size:.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+      color:var(--leaflt);margin-bottom:10px;
+    }
+    .section-title{
+      font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);
+      font-weight:700;line-height:1.15;color:var(--charcoal);
+    }
+    .section-sub{margin-top:10px;color:var(--muted);font-size:.95rem;max-width:500px;line-height:1.6;}
+
+    /* ── PRODUCTS CAROUSEL ── */
+    #products{background:var(--white);}
+    .carousel-wrap{position:relative;margin-top:40px;}
+    .carousel{
+      display:flex;gap:20px;overflow-x:auto;
+      padding-bottom:16px;scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+    }
+    .carousel::-webkit-scrollbar{height:4px;}
+    .carousel::-webkit-scrollbar-track{background:#f0f0f0;border-radius:4px;}
+    .carousel::-webkit-scrollbar-thumb{background:var(--leaflt);border-radius:4px;}
+    .product-card{
+      flex:0 0 260px;scroll-snap-align:start;
+      background:var(--cream);border-radius:var(--radius);
+      overflow:hidden;box-shadow:var(--shadow);
+      display:flex;flex-direction:column;
+      transition:transform .25s,box-shadow .25s;
+      cursor:pointer;
+    }
+    .product-card:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(0,0,0,.13);}
+    .product-card.selected{outline:3px solid var(--leaf);}
+    .product-img{
+      width:100%;height:200px;object-fit:cover;
+      background:#e8f0eb;
+    }
+    .product-img-placeholder{
+      width:100%;height:200px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:3rem;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);
+    }
+    .product-info{padding:18px 16px 14px;}
+    .product-name{font-weight:700;font-size:1rem;color:var(--charcoal);}
+    .product-desc{font-size:.8rem;color:var(--muted);margin-top:4px;line-height:1.5;}
+    .product-price{
+      margin-top:10px;font-family:'Playfair Display',serif;
+      font-size:1.1rem;font-weight:700;color:var(--leaf);
+    }
+    .product-add{
+      margin:12px 16px 16px;
+      background:var(--leaf);color:var(--white);border:none;
+      padding:10px;border-radius:8px;font-size:.85rem;font-weight:600;
+      cursor:pointer;width:calc(100% - 32px);
+      transition:background .2s;
+    }
+    .product-add:hover{background:#1e4d38;}
+    .product-add.added{background:var(--gold);color:var(--charcoal);}
+
+    /* ── CART ── */
+    #cart-section{background:var(--cream);}
+    .cart-box{
+      background:var(--white);border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:28px;max-width:700px;margin:0 auto;
+    }
+    .cart-empty{text-align:center;color:var(--muted);padding:32px 0;font-size:.95rem;}
+    .cart-item{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:12px 0;border-bottom:1px solid #f0f0f0;gap:12px;
+    }
+    .cart-item:last-child{border-bottom:none;}
+    .cart-item-name{font-weight:600;font-size:.95rem;}
+    .cart-item-qty{display:flex;align-items:center;gap:8px;}
+    .qty-btn{
+      width:28px;height:28px;border-radius:50%;border:1.5px solid var(--leaf);
+      background:transparent;color:var(--leaf);font-size:1rem;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;font-weight:700;
+      transition:background .15s;
+    }
+    .qty-btn:hover{background:var(--leaf);color:var(--white);}
+    .qty-num{font-weight:700;min-width:20px;text-align:center;}
+    .cart-item-remove{
+      background:none;border:none;cursor:pointer;color:#e53e3e;
+      font-size:1.1rem;padding:4px;
+    }
+
+    /* ── ORDER FORM ── */
+    .order-form{margin-top:28px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+    @media(max-width:540px){.form-row{grid-template-columns:1fr;}}
+    .form-group{display:flex;flex-direction:column;gap:6px;}
+    .form-group label{font-size:.8rem;font-weight:600;color:var(--charcoal);letter-spacing:.3px;}
+    .form-group input,
+    .form-group textarea,
+    .form-group select{
+      border:1.5px solid #e5e7eb;border-radius:8px;
+      padding:10px 14px;font-size:.9rem;font-family:'Inter',sans-serif;
+      background:var(--cream);color:var(--charcoal);
+      transition:border-color .2s;outline:none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus{border-color:var(--leaf);}
+    .form-group textarea{min-height:80px;resize:vertical;}
+    .btn-send{
+      width:100%;background:var(--leaf);color:var(--white);border:none;
+      padding:15px;border-radius:10px;font-size:1rem;font-weight:700;
+      cursor:pointer;transition:background .2s,transform .15s;margin-top:6px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+    }
+    .btn-send:hover{background:#1e4d38;transform:translateY(-1px);}
+    .btn-send:disabled{background:#9ca3af;cursor:not-allowed;transform:none;}
+    .form-msg{
+      margin-top:14px;padding:12px 16px;border-radius:8px;
+      font-size:.88rem;font-weight:500;display:none;
+    }
+    .form-msg.success{background:#d1fae5;color:#065f46;display:block;}
+    .form-msg.error{background:#fee2e2;color:#991b1b;display:block;}
+
+    /* ── WHY US ── */
+    #about{background:var(--white);}
+    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;margin-top:40px;}
+    .feature{
+      background:var(--cream);border-radius:var(--radius);padding:28px 22px;
+      border-left:4px solid var(--leaflt);
+    }
+    .feature-icon{font-size:2rem;margin-bottom:12px;}
+    .feature-title{font-weight:700;font-size:.95rem;margin-bottom:6px;}
+    .feature-desc{font-size:.82rem;color:var(--muted);line-height:1.55;}
+
+    /* ── FOOTER ── */
+    footer{
+      background:var(--charcoal);color:rgba(255,255,255,.65);
+      padding:48px 6vw 32px;text-align:center;
+    }
+    .footer-logo{
+      font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;
+      color:var(--white);margin-bottom:8px;
+    }
+    .footer-logo span{color:var(--gold);}
+    .footer-tag{font-size:.85rem;margin-bottom:24px;}
+    .footer-links{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;margin-bottom:24px;}
+    .footer-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.82rem;transition:color .2s;}
+    .footer-links a:hover{color:var(--white);}
+    .footer-copy{font-size:.75rem;color:rgba(255,255,255,.3);}
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float{
+      position:fixed;bottom:24px;right:24px;z-index:999;
+      width:58px;height:58px;border-radius:50%;
+      background:#25D366;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 20px rgba(37,211,102,.5);
+      text-decoration:none;transition:transform .2s,box-shadow .2s;
+    }
+    .wa-float:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(37,211,102,.6);}
+    .wa-float svg{width:30px;height:30px;fill:#fff;}
+    .wa-tooltip{
+      position:absolute;right:68px;top:50%;transform:translateY(-50%);
+      background:var(--charcoal);color:var(--white);
+      font-size:.75rem;font-weight:600;white-space:nowrap;
+      padding:6px 12px;border-radius:6px;pointer-events:none;
+      opacity:0;transition:opacity .2s;
+    }
+    .wa-float:hover .wa-tooltip{opacity:1;}
+
+    /* ── CART BADGE ── */
+    .cart-trigger{
+      position:fixed;bottom:96px;right:24px;z-index:998;
+      background:var(--leaf);color:var(--white);border:none;
+      width:54px;height:54px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      cursor:pointer;box-shadow:var(--shadow);
+      font-size:1.4rem;transition:transform .2s;
+    }
+    .cart-trigger:hover{transform:scale(1.08);}
+    .cart-badge{
+      position:absolute;top:-4px;right:-4px;
+      background:var(--gold);color:var(--charcoal);
+      font-size:.65rem;font-weight:800;
+      width:20px;height:20px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px){
+      .nav-links{display:none;}
+      .hero-img{width:100%;opacity:.25;}
+      .hero-content{max-width:100%;}
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:none;}}
+    .anim{opacity:0;animation:fadeUp .6s ease forwards;}
+    .anim-d1{animation-delay:.1s;}
+    .anim-d2{animation-delay:.25s;}
+    .anim-d3{animation-delay:.4s;}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Annraj <span>Agro</span> Food</div>
+  <ul class="nav-links">
+    <li><a href="#products">Products</a></li>
+    <li><a href="#cart-section">Order</a></li>
+    <li><a href="#about">About</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <img class="hero-img"
+    src="https://i.postimg.cc/K4NMn1Cs/makhana.jpg"
+    onerror="this.style.display='none'"
+    alt="Fresh Makhana" />
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow anim anim-d1">🌾 Pure &amp; Natural</span>
+    <h1 class="hero-title anim anim-d2">
+      Nature's Best,<br/>At Your <span class="gold">Doorstep</span>
+    </h1>
+    <p class="hero-sub anim anim-d3">Premium Makhana &amp; organic agro products — healthy choices at the best prices, straight from the farm.</p>
+    <div class="hero-actions anim anim-d3">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">🛒 Buy Now</button>
+      <button class="btn-outline" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">Learn More</button>
+    </div>
+    <div class="hero-badge anim anim-d3">
+      <div class="badge-item"><strong>100%</strong> Natural</div>
+      <div class="badge-item"><strong>Direct</strong> Farm Source</div>
+      <div class="badge-item"><strong>Fast</strong> Delivery</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-label">Our Products</div>
+  <h2 class="section-title">Fresh Picks for You</h2>
+  <p class="section-sub">Tap a product to add it to your order. Adjust quantities in the cart below.</p>
+  <div class="carousel-wrap">
+    <div class="carousel" id="carousel">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- CART + ORDER FORM -->
+<section class="section" id="cart-section">
+  <div class="section-label">Your Order</div>
+  <h2 class="section-title">Review &amp; Place Order</h2>
+  <p class="section-sub">Fill in your details and we'll confirm your order via email and WhatsApp.</p>
+
+  <div class="cart-box" style="margin-top:32px;">
+
+    <!-- Cart Items -->
+    <div id="cart-items">
+      <div class="cart-empty" id="cart-empty">🛒 Your cart is empty. Add products above!</div>
+    </div>
+
+    <!-- Order Form -->
+    <div class="order-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cust-name">Your Name *</label>
+          <input type="text" id="cust-name" placeholder="e.g. Ramesh Kumar" required/>
+        </div>
+        <div class="form-group">
+          <label for="cust-phone">Phone Number *</label>
+          <input type="tel" id="cust-phone" placeholder="e.g. 9876543210" required/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cust-email">Your Email (optional)</label>
+          <input type="email" id="cust-email" placeholder="you@email.com"/>
+        </div>
+        <div class="form-group">
+          <label for="cust-address">Delivery Address *</label>
+          <input type="text" id="cust-address" placeholder="Village / City / PIN" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="cust-note">Additional Note</label>
+        <textarea id="cust-note" placeholder="Any special instructions or quantity details…"></textarea>
+      </div>
+      <button class="btn-send" id="send-btn" onclick="sendOrder()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Send Order to Shop
+      </button>
+      <div class="form-msg" id="form-msg"></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section" id="about">
+  <div class="section-label">Why Choose Us</div>
+  <h2 class="section-title">Healthy. Honest. Affordable.</h2>
+  <p class="section-sub">Annraj Agro Food has been serving quality agro products directly to families across the region.</p>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🌿</div>
+      <div class="feature-title">100% Natural</div>
+      <div class="feature-desc">No artificial flavours, no preservatives. Just pure, farm-fresh goodness.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💰</div>
+      <div class="feature-title">Best Prices</div>
+      <div class="feature-desc">We source directly from farmers so you get quality at the fairest price.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🚚</div>
+      <div class="feature-title">Quick Delivery</div>
+      <div class="feature-desc">We process orders fast and deliver safely to your doorstep.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🤝</div>
+      <div class="feature-title">Trusted by Families</div>
+      <div class="feature-desc">Years of serving happy customers with consistent quality products.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Annraj <span>Agro</span> Food</div>
+  <div class="footer-tag">Healthy &amp; Best Prices 🌾</div>
+  <div class="footer-links">
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#cart-section">Order</a>
+    <a href="mailto:ydinanath346@gmail.com">ydinanath346@gmail.com</a>
+    <a href="https://wa.me/917493941090" target="_blank">WhatsApp Us</a>
+  </div>
+  <div class="footer-copy">© 2025 Annraj Agro Food. All rights reserved.</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/917493941090" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <div class="wa-tooltip">Chat with us</div>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+</a>
+
+<!-- CART FLOAT BUTTON -->
+<button class="cart-trigger" onclick="document.getElementById('cart-section').scrollIntoView({behavior:'smooth'})" aria-label="View Cart">
+  🛒
+  <span class="cart-badge" id="cart-badge">0</span>
+</button>
+
+<script>
+  // ── Init EmailJS ──
+  emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+
+  // ── Products Data ──
+  const products = [
+    {
+      id: 1,
+      name: "Premium Makhana",
+      desc: "Crispy lotus seeds, roasted & natural",
+      price: "₹250 / 250g",
+      img: "https://i.postimg.cc/K4NMn1Cs/makhana.jpg",
+      emoji: "🪷"
+    },
+    {
+      id: 2,
+      name: "Makhana Roasted",
+      desc: "Lightly salted, oven-roasted makhana",
+      price: "₹280 / 250g",
+      img: "https://i.postimg.cc/MvHvVd75/roasted.jpg",
+      emoji: "🔥"
+    },
+    {
+      id: 3,
+      name: "Organic Makhana",
+      desc: "Certified organic, farm fresh batch",
+      price: "₹320 / 250g",
+      img: "https://i.postimg.cc/K4NMn1Cs/makhana.jpg",
+      emoji: "🌱"
+    },
+    {
+      id: 4,
+      name: "Makhana Mix Masala",
+      desc: "Spicy masala blend, a perfect snack",
+      price: "₹260 / 200g",
+      img: "https://i.postimg.cc/MvHvVd75/roasted.jpg",
+      emoji: "🌶️"
+    },
+    {
+      id: 5,
+      name: "Makhana Bulk Pack",
+      desc: "Economy bulk pack for families",
+      price: "₹850 / 1kg",
+      img: "https://i.postimg.cc/K4NMn1Cs/makhana.jpg",
+      emoji: "📦"
+    }
+  ];
+
+  let cart = {}; // {productId: qty}
+
+  // ── Render Carousel ──
+  function renderCarousel() {
+    const carousel = document.getElementById('carousel');
+    carousel.innerHTML = products.map(p => `
+      <div class="product-card" id="card-${p.id}">
+        <img class="product-img"
+          src="${p.img}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          alt="${p.name}"/>
+        <div class="product-img-placeholder" style="display:none;">${p.emoji}</div>
+        <div class="product-info">
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-price">${p.price}</div>
+        </div>
+        <button class="product-add" id="add-${p.id}" onclick="addToCart(${p.id})">
+          + Add to Cart
+        </button>
+      </div>
+    `).join('');
+  }
+
+  // ── Cart Logic ──
+  function addToCart(id) {
+    cart[id] = (cart[id] || 0) + 1;
+    const btn = document.getElementById(`add-${id}`);
+    btn.textContent = '✓ Added';
+    btn.classList.add('added');
+    setTimeout(() => {
+      btn.textContent = '+ Add to Cart';
+      btn.classList.remove('added');
+    }, 1200);
+    renderCart();
+  }
+
+  function updateQty(id, delta) {
+    cart[id] = (cart[id] || 0) + delta;
+    if (cart[id] <= 0) delete cart[id];
+    renderCart();
+  }
+
+  function removeItem(id) {
+    delete cart[id];
+    renderCart();
+  }
+
+  function renderCart() {
+    const container = document.getElementById('cart-items');
+    const empty = document.getElementById('cart-empty');
+    const badge = document.getElementById('cart-badge');
+    const ids = Object.keys(cart);
+    const totalQty = ids.reduce((s,id) => s + cart[id], 0);
+    badge.textContent = totalQty;
+
+    if (ids.length === 0) {
+      container.innerHTML = '<div class="cart-empty" id="cart-empty">🛒 Your cart is empty. Add products above!</div>';
+      return;
+    }
+
+    container.innerHTML = ids.map(id => {
+      const p = products.find(x => x.id == id);
+      return `
+        <div class="cart-item">
+          <div>
+            <div class="cart-item-name">${p.emoji} ${p.name}</div>
+            <div style="font-size:.78rem;color:var(--muted);">${p.price}</div>
+          </div>
+          <div class="cart-item-qty">
+            <button class="qty-btn" onclick="updateQty(${id}, -1)">−</button>
+            <span class="qty-num">${cart[id]}</span>
+            <button class="qty-btn" onclick="updateQty(${id}, 1)">+</button>
+            <button class="cart-item-remove" onclick="removeItem(${id})" title="Remove">✕</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ── Send Order via EmailJS ──
+  function sendOrder() {
+    const name    = document.getElementById('cust-name').value.trim();
+    const phone   = document.getElementById('cust-phone').value.trim();
+    const email   = document.getElementById('cust-email').value.trim();
+    const address = document.getElementById('cust-address').value.trim();
+    const note    = document.getElementById('cust-note').value.trim();
+    const msg     = document.getElementById('form-msg');
+    const btn     = document.getElementById('send-btn');
+
+    if (!name || !phone || !address) {
+      msg.className = 'form-msg error';
+      msg.textContent = '⚠ Please fill in your Name, Phone, and Address.';
+      return;
+    }
+    const ids = Object.keys(cart);
+    if (ids.length === 0) {
+      msg.className = 'form-msg error';
+      msg.textContent = '⚠ Your cart is empty! Please add at least one product.';
+      return;
+    }
+
+    const itemsList = ids.map(id => {
+      const p = products.find(x => x.id == id);
+      return `• ${p.name} × ${cart[id]} (${p.price})`;
+    }).join('\n');
+
+    btn.disabled = true;
+    btn.innerHTML = '⏳ Sending…';
+
+    const templateParams = {
+      to_email:     'ydinanath346@gmail.com',
+      customer_name: name,
+      customer_phone: phone,
+      customer_email: email || 'Not provided',
+      customer_address: address,
+      order_items:  itemsList,
+      note:         note || 'None',
+      order_time:   new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'})
+    };
+
+    emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+      .then(() => {
+        msg.className = 'form-msg success';
+        msg.textContent = '✅ Order sent successfully! We will contact you shortly on WhatsApp/phone.';
+        cart = {};
+        renderCart();
+        document.getElementById('cust-name').value = '';
+        document.getElementById('cust-phone').value = '';
+        document.getElementById('cust-email').value = '';
+        document.getElementById('cust-address').value = '';
+        document.getElementById('cust-note').value = '';
+      })
+      .catch(err => {
+        console.error(err);
+        // Fallback: open WhatsApp with order details
+        const waText = encodeURIComponent(
+          `*New Order – Annraj Agro Food*\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n📍 Address: ${address}\n\n*Items:*\n${itemsList}\n\n📝 Note: ${note||'None'}`
+        );
+        msg.className = 'form-msg error';
+        msg.innerHTML = `⚠ Email failed. <a href="https://wa.me/917493941090?text=${waText}" target="_blank" style="color:var(--leaf);font-weight:700;">Click here to send your order via WhatsApp instead →</a>`;
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Order to Shop';
+      });
+  }
+
+  // ── Auto-slide carousel ──
+  let slideIndex = 0;
+  setInterval(() => {
+    const c = document.getElementById('carousel');
+    if (!c) return;
+    const card = c.querySelector('.product-card');
+    if (!card) return;
+    const w = card.offsetWidth + 20;
+    slideIndex++;
+    if (slideIndex >= products.length) slideIndex = 0;
+    c.scrollTo({left: slideIndex * w, behavior: 'smooth'});
+  }, 3200);
+
+  // ── Init ──
+  renderCarousel();
+  renderCart();
+</script>
+</body>
+</html>
